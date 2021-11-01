@@ -155,9 +155,9 @@ pom文件,引入依赖,修改父工程版本为2.5.0最好
 
 #### 4.直接复制依赖jar包内的 example 包到你的项目包下(只为演示 可自定义)
 
-![image-20211101201544485](https://github.com/JinHuang0923/simbotQQ-drp/blob/main/docImg/image-20211101201544485.png)
+![image-20211101201544485](https://github.com/JinHuang0923/simbotQQ-drp/raw/main/docImg/image-20211101201544485.png)
 
-![image-20211101201621023](https://github.com/JinHuang0923/simbotQQ-drp/blob/main/docImg/image-20211101201621023.png)
+![image-20211101201621023](https://github.com/JinHuang0923/simbotQQ-drp/raw/main/docImg/image-20211101201621023.png)
 
 #### 5.添加配置文件application.yml/application.properties
 
@@ -172,7 +172,7 @@ simbot-drp:
 
 #### 6.添加登录的qq机器人账号到配置文件夹下的配置文件(文件夹名要求一致,文件名以.bot结尾的格式就行)   后面的的#qq账号 #qq密码 需要删掉!否则读取不了
 
-![image-20211101202041893](https://github.com/JinHuang0923/simbotQQ-drp/blob/main/docImg/image-20211101202041893.png)
+![image-20211101202041893](https://github.com/JinHuang0923/simbotQQ-drp/raw/main/docImg/image-20211101202041893.png)
 
 #### 7.创建启动类 除了springboot的启动类注解 还必须有@EnableSimbot注解
 
@@ -189,7 +189,7 @@ public class MyTestApplication {
 
 #### 8.main方法运行开始测试
 
-![image-20211101202556866](https://github.com/JinHuang0923/simbotQQ-drp/blob/main/docImg/image-20211101202556866.png)
+![image-20211101202556866](https://github.com/JinHuang0923/simbotQQ-drp/raw/main/docImg/image-20211101202556866.png)
 
 看到这样的界面就是运行成功,可对他发送具体的私聊消息测试指令或群聊消息测试指令测试是否正常
 
