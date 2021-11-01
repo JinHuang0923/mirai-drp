@@ -86,9 +86,9 @@ mvn install:install-file
 
 #### 3.新建一个Springboot工程 引入springboot父工程与本jar包依赖
 
-![image-20211101200338923](https://github.com/JinHuang0923/simbotQQ-drp/blob/main/docImg/image-20211101200338923.png)
+![image-20211101200338923](https://github.com/JinHuang0923/simbotQQ-drp/raw/main/docImg/image-20211101200338923.png)
 
-![image-20211101200559556](https://github.com/JinHuang0923/simbotQQ-drp/blob/main/docImg/image-20211101200559556.png)
+![image-20211101200559556](https://github.com/JinHuang0923/simbotQQ-drp/raw/main/docImg/image-20211101200559556.png)
 
 pom文件,引入依赖,修改父工程版本为2.5.0最好
 
