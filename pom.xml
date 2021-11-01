@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.0</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>xyz.sinsong</groupId>
+    <artifactId>simbot-drp-spring-boot-starter</artifactId>
+    <version>1.0</version>
+    <name>simbot-drp-spring-boot-starter</name>
+    <description>simbot-drp-spring-boot-starter</description>
+    <properties>
+        <java.version>1.8</java.version>
+        <simbot.version>2.2.3</simbot.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--机器人相关 simbot-->
+        <dependency>
+            <groupId>love.forte.simple-robot</groupId>
+            <artifactId>component-mirai-spring-boot-starter</artifactId>
+            <version>${simbot.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- java源码 --><!--把注释源码也打入基础包中-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- 指定项目编译时的java版本和编码方式 -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <target>1.8</target>
+                    <source>1.8</source>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <!-- developers -->
+    <developers>
+        <developer>
+            <roles>
+                <role>Project manager</role>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+            <name>JinHuang</name>
+            <email>sinsong1019@163.com</email>
+        </developer>
+    </developers>
+
+</project>
