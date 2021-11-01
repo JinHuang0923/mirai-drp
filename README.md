@@ -38,7 +38,28 @@
 
 - ##### 交流QQ群:937621780 欢迎交流提出意见
 
-- ##### 项目代码完全开源,如果您有更好的想法一起更新,欢迎提交PR
+------
+
+## 许可证:
+
+Copyright (C) <2021-2022>  <JinHuang>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+------
+
+本项目 采用 AGPLv3 协议开源。如果您有更好的想法一起更新,欢迎提交PR
 
 ------
 
@@ -86,9 +107,9 @@ mvn install:install-file
 
 #### 3.新建一个Springboot工程 引入springboot父工程与本jar包依赖
 
-![image-20211101200338923](https://github.com/JinHuang0923/simbotQQ-drp/raw/main/docImg/image-20211101200338923.png)
+![image-20211101200338923](https://gitee.com/jinhuang0923/simbotQQ-drp/raw/main/docImg/image-20211101200338923.png)
 
-![image-20211101200559556](https://github.com/JinHuang0923/simbotQQ-drp/raw/main/docImg/image-20211101200559556.png)
+![image-20211101200559556](https://gitee.com/JinHuang0923/simbotQQ-drp/raw/main/docImg/image-20211101200559556.png)
 
 pom文件,引入依赖,修改父工程版本为2.5.0最好
 
@@ -155,9 +176,9 @@ pom文件,引入依赖,修改父工程版本为2.5.0最好
 
 #### 4.直接复制依赖jar包内的 example 包到你的项目包下(只为演示 可自定义)
 
-![image-20211101201544485](https://github.com/JinHuang0923/simbotQQ-drp/raw/main/docImg/image-20211101201544485.png)
+![image-20211101201544485](https://gitee.com/JinHuang0923/simbotQQ-drp/raw/main/docImg/image-20211101201544485.png)
 
-![image-20211101201621023](https://github.com/JinHuang0923/simbotQQ-drp/raw/main/docImg/image-20211101201621023.png)
+![image-20211101201621023](https://gitee.com/JinHuang0923/simbotQQ-drp/raw/main/docImg/image-20211101201621023.png)
 
 #### 5.添加配置文件application.yml/application.properties
 
@@ -172,7 +193,7 @@ simbot-drp:
 
 #### 6.添加登录的qq机器人账号到配置文件夹下的配置文件(文件夹名要求一致,文件名以.bot结尾的格式就行)   后面的的#qq账号 #qq密码 需要删掉!否则读取不了
 
-![image-20211101202041893](https://github.com/JinHuang0923/simbotQQ-drp/raw/main/docImg/image-20211101202041893.png)
+![image-20211101202041893](https://gitee.com/JinHuang0923/simbotQQ-drp/raw/main/docImg/image-20211101202041893.png)
 
 #### 7.创建启动类 除了springboot的启动类注解 还必须有@EnableSimbot注解
 
@@ -189,7 +210,7 @@ public class MyTestApplication {
 
 #### 8.main方法运行开始测试
 
-![image-20211101202556866](https://github.com/JinHuang0923/simbotQQ-drp/raw/main/docImg/image-20211101202556866.png)
+![image-20211101202556866](https://gitee.com/JinHuang0923/simbotQQ-drp/raw/main/docImg/image-20211101202556866.png)
 
 看到这样的界面就是运行成功,可对他发送具体的私聊消息测试指令或群聊消息测试指令测试是否正常
 
