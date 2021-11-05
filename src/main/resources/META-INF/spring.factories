@@ -1,5 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  xyz.sinsong.core.properties.SimbotDrpAutoConfiguration,\
-  xyz.sinsong.core.component.ComponentConfiguration,\
-  xyz.sinsong.core.load.StartAddDataListener
-#org.springframework.boot.=xyz.sinsong.core.load.StartAddDataListener
+  xyz.sinsong.core.StartListener,\
+  xyz.sinsong.core.ioc.IocUtil,\
+  xyz.sinsong.core.resolver.SimbotDrpAutoConfiguration,\
+  xyz.sinsong.core.ioc.InitializationListener

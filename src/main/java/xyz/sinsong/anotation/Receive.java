@@ -1,4 +1,4 @@
-package xyz.sinsong.core.anotation;
+package xyz.sinsong.anotation;
 
 import java.lang.annotation.*;
 

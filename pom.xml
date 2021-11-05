@@ -9,13 +9,14 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>xyz.sinsong</groupId>
-    <artifactId>simbot-drp-spring-boot-starter</artifactId>
+    <artifactId>mirai-drp-spring-boot-starter</artifactId>
     <version>1.0</version>
-    <name>simbot-drp-spring-boot-starter</name>
-    <description>simbot-drp-spring-boot-starter</description>
+    <name>mirai-drp-spring-boot-starter</name>
+    <description>mirai-drp-spring-boot-starter</description>
     <properties>
         <java.version>1.8</java.version>
-        <simbot.version>2.2.3</simbot.version>
+        <mirai.version>2.7.0</mirai.version>
+        <hutool.version>5.7.15</hutool.version>
     </properties>
     <dependencies>
         <dependency>
@@ -26,19 +27,21 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-        <!--机器人相关 simbot-->
+            <dependency>
+                <groupId>net.mamoe</groupId>
+                <artifactId>mirai-core-jvm</artifactId>
+                <version>${mirai.version}</version>
+            </dependency>
         <dependency>
-            <groupId>love.forte.simple-robot</groupId>
-            <artifactId>component-mirai-spring-boot-starter</artifactId>
-            <version>${simbot.version}</version>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
         </dependency>
-
     </dependencies>
 
     <build>

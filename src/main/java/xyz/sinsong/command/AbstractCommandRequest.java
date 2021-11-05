@@ -1,4 +1,7 @@
-package xyz.sinsong.core.model;
+package xyz.sinsong.command;
+
+import net.mamoe.mirai.contact.Contact;
+import xyz.sinsong.core.model.Sender;
 
 import java.util.HashMap;
 
@@ -9,7 +12,9 @@ import java.util.HashMap;
 public abstract class AbstractCommandRequest implements CommandRequest{
     public String command;//指令
     public HashMap<String,String> paramMap;//指令参数 获取直接 get("1") 每一个参数都这么获取 get("0") 就是指令
-    public AUser user;//发送人
+    public Sender sender;//发送人
+    public Contact contact;//发送人对象 mirai 原生 可快速响应
+
 
     public String getParameter(int index){
         if (index == 0){
@@ -33,21 +38,19 @@ public abstract class AbstractCommandRequest implements CommandRequest{
         this.paramMap = paramMap;
     }
 
-    public AUser getUser() {
-        return user;
+    public Sender getSender() {
+        return sender;
     }
 
-    public void setUser(AUser user) {
-        this.user = user;
+    public void setSender(Sender sender) {
+        this.sender = sender;
     }
 
-    @Override
-    public String toString() {
-        return "CommandRequest{" +
-                "command='" + command + '\'' +
-                ", paramMap=" + paramMap +
-                ", user=" + user +
-                '}';
+    public Contact getContact() {
+        return contact;
     }
 
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
 }

@@ -1,9 +1,7 @@
-package xyz.sinsong.core.properties;
+package xyz.sinsong.core.resolver;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Jin Huang
@@ -11,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
  * 扫描包路径的配置类 读取配置文件 主要是接收器扫描的包
  */
 @Data
-@ConfigurationProperties(prefix = "simbot-drp")
 public class ReceiverScanProperties {
     String scanPackage = "no.default.properties";
     String commandProcessor = "xyz.sinsong.core.dispatch.DispatchCommand";

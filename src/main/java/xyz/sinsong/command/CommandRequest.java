@@ -1,4 +1,7 @@
-package xyz.sinsong.core.model;
+package xyz.sinsong.command;
+
+import net.mamoe.mirai.contact.Contact;
+import xyz.sinsong.core.model.Sender;
 
 import java.util.HashMap;
 
@@ -19,7 +22,11 @@ public interface CommandRequest {
 
      void setParamMap(HashMap<String, String> paramMap);
 
-     AUser getUser();
+     Sender getSender();
+     void setSender(Sender sender);
 
-     void setUser(AUser user);
+     Contact getContact();
+
+     void setContact(Contact contact);
+
 }

@@ -1,107 +1,53 @@
 package xyz.sinsong.core.dispatch;
 
 import lombok.extern.slf4j.Slf4j;
-import love.forte.simbot.api.message.MessageContent;
-import love.forte.simbot.api.message.containers.AccountInfo;
-import love.forte.simbot.api.message.containers.GroupInfo;
-import love.forte.simbot.api.message.events.GroupMsg;
-import love.forte.simbot.api.message.events.MessageGet;
-import love.forte.simbot.api.message.events.PrivateMsg;
+import net.mamoe.mirai.message.data.Message;
 import xyz.sinsong.core.load.ReceiverHandlerFactory;
 import xyz.sinsong.core.load.ReceiverHandlerMappingFactory;
-import xyz.sinsong.core.model.AUser;
-import xyz.sinsong.core.model.CommandRequest;
-import xyz.sinsong.core.model.GroupCommandRequest;
-import xyz.sinsong.core.model.PrivateCommandRequest;
-import xyz.sinsong.core.utils.MapUtils;
+import xyz.sinsong.command.CommandRequest;
+import xyz.sinsong.command.GroupCommandRequest;
+import xyz.sinsong.command.PrivateCommandRequest;
+import xyz.sinsong.command.CommandResPonse;
+import xyz.sinsong.command.GroupCommandResPonse;
+import xyz.sinsong.command.PrivateCommandResPonse;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 
 /**
  * @author Jin Huang
  * @date 2021/11/1 10:51
+ * 调度器抽象实现 主要逻辑
+ * 后续考虑把响应对象,一起发送给方法调用方 mvc
  */
 @Slf4j
 public abstract class AbstractCommandProcessor implements CommandProcessor {
 
     /**
+     * 后续好绿这里初始化做封装 而不是在监听器
      * 这里处理请求 参数 请求对象封装
      * 这个不被继承 参数封装自己处理就行
      * @return
      */
     @Override
-    public CommandRequest init(MessageGet messageGet) {
-//        log.info("调用init方法处理消息...");
-        CommandRequest commandRequest = null;
-        //判断是不是群消息 是的话做以下处理
-        if (messageGet instanceof GroupMsg){
-            GroupMsg groupMsg = (GroupMsg) messageGet;
-            //封装发送人对象与 request对象
-            //取出基础信息
-            GroupInfo groupInfo = groupMsg.getGroupInfo();//群信息
-            long groupCodeNumber = groupInfo.getGroupCodeNumber();//群号
-            String groupName = groupInfo.getGroupName();//群名
-            String msgStr = groupMsg.getMsgContent().getMsg();//消息文本
-            long senderQqNumber = groupMsg.getAccountInfo().getAccountCodeNumber();//发送人qq号
-            String nickName = groupMsg.getAccountInfo().getAccountNickname();//发送人昵称
-
-            //打印日志
-            log.info("群聊[{}({})]:{}({}):{}",groupName,groupCodeNumber,nickName,senderQqNumber,msgStr);
-
-            //封装user对象
-            AUser auser = new AUser();
-            auser.setNickName(nickName);
-            auser.setQqNumber(senderQqNumber);
-
-            //封装指令request对象
-            String[] strings = msgStr.split("\\s+");//按空格分割
-            HashMap<String, String> paramMap = MapUtils.getParamMap(strings);
-            String command = paramMap.get("0"); //这是指令 其他都是参数 单独封装
-            //封装请求参数
-            commandRequest = new GroupCommandRequest(groupInfo);
-            commandRequest.setCommand(command);
-            commandRequest.setParamMap(paramMap);
-            commandRequest.setUser(auser);
-
-        }
-
-        // TODO: 2021/11/1  如果是私聊消息 这里处理封装私聊消息对象
-        if (messageGet instanceof PrivateMsg){
-            PrivateMsg privateMsg = (PrivateMsg) messageGet;
-            //取出基础信息
-            AccountInfo accountInfo = privateMsg.getAccountInfo();//发送人信息
-            String msgStr = privateMsg.getMsgContent().getMsg();//消息文本
-            long senderQqNumber =accountInfo.getAccountCodeNumber();//发送人qq号
-            String nickName = accountInfo.getAccountNickname();//发送人昵称
-            //打印日志
-            log.info("私聊[{}({})]:{}",nickName,senderQqNumber,msgStr);
-
-            //封装对象
-            commandRequest = new PrivateCommandRequest(accountInfo);
-            String[] strings = msgStr.split("\\s+");//按空格分割
-            HashMap<String, String> paramMap = MapUtils.getParamMap(strings);
-            String command = paramMap.get("0"); //这是指令 其他都是参数 单独封装
-
-            AUser auser = new AUser();
-            auser.setNickName(nickName);
-            auser.setQqNumber(senderQqNumber);
-
-            commandRequest.setCommand(command);
-            commandRequest.setParamMap(paramMap);
-            commandRequest.setUser(auser);
-        }
-        return commandRequest;
-    }
-
-
+    public abstract CommandRequest init(CommandRequest request);
     // 分发指令前方法 不做处理 使用者需要再处理
     @Override
     public abstract CommandRequest before(CommandRequest request);
     //分发指令后方法 不做处理 使用者需要再处理
     @Override
-    public abstract MessageContent after(MessageContent messageContent);
+    public abstract CommandResPonse after(CommandResPonse commandResPonse);
+
+    /**
+     * 回复消息 默认直接响应
+     * @param commandResPonse
+     */
+    @Override
+    public void reply(CommandResPonse commandResPonse) {
+        if (commandResPonse !=null && commandResPonse.getMessage()!=null){
+            commandResPonse.sendMessage();
+        }
+    }
 
     /**
      * 主要分发指令的处理方法 这里封装
@@ -109,8 +55,8 @@ public abstract class AbstractCommandProcessor implements CommandProcessor {
      * @return
      */
     @Override
-    public final MessageContent handle(CommandRequest request) {
-//        log.info("具体分发指令方法handle()调用...");
+    public final CommandResPonse handle(CommandRequest request) {
+        // log.info("具体分发指令方法handle()调用...");
         //从request 对象中取出指令
         String command = request.getCommand();
 
@@ -140,7 +86,10 @@ public abstract class AbstractCommandProcessor implements CommandProcessor {
         }
         //实际调用方法处理 request对象作为他的方法
         try {
-            return invokeHandlerMethod(instance,methodMapping,request);
+            Message message = invokeHandlerMethod(instance, methodMapping, request);
+            //调用方法之后拿到了消息返回的主体了 需要联系人对象 请求对象是有的 群请求群响应 私请求私响应
+            return packResponse(request,message);
+
         } catch (Throwable e) {
             e.printStackTrace();
         }
@@ -152,24 +101,47 @@ public abstract class AbstractCommandProcessor implements CommandProcessor {
     /**
      * 具体执行指令处理方法
      * 放入一个Receiver 实例对象 与方法实例 对象 以及方法参数
+     * 方法需要返回一个message 之后调度器发送之前再做处理封装为响应对象
      * @param instance
      * @param method
      * @return
      * @throws Throwable
      */
-    public final MessageContent invokeHandlerMethod(Object instance, Method method,CommandRequest request)
+    public final Message invokeHandlerMethod(Object instance, Method method,CommandRequest request)
             throws Throwable {
-        MessageContent result = null;
+        Message result = null;
         if (method != null) {
             try {
 //                log.info("找到接收指令方法,开启执行方法处理!");
                 //调用method的方法 返回结果 // invoke 第一个参数是实例对象   第二个是可变的方法参数
-                result = (MessageContent) method.invoke(instance,request);
+                result = (Message) method.invoke(instance,request);
             } catch (InvocationTargetException e) {
                 log.error("执行指令方法时出错了!");
                 throw e.getTargetException();
             }
         }
         return result;
+    }
+
+    /**
+     * 封装响应对象
+     * @return
+     * @param request
+     * @param message
+     */
+    public CommandResPonse packResponse(CommandRequest request, Message message){
+        CommandResPonse resPonse = null;
+        if (request instanceof GroupCommandRequest){
+            resPonse = new GroupCommandResPonse();
+            resPonse.setMessage(message);
+            resPonse.setContact(request.getContact());
+        }
+        if (request instanceof PrivateCommandRequest){
+            resPonse = new PrivateCommandResPonse();
+            resPonse.setMessage(message);
+            resPonse.setContact(request.getContact());
+        }
+        return resPonse;
+
     }
 }

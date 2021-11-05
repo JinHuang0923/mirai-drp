@@ -11,7 +11,7 @@ import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.core.type.filter.TypeFilter;
 import org.springframework.util.ClassUtils;
-import xyz.sinsong.core.anotation.Receiver;
+import xyz.sinsong.anotation.Receiver;
 
 import java.io.IOException;
 
@@ -143,7 +143,6 @@ public class ReceiverHandlerMappingResolver {
     private boolean matchesFilter(MetadataReader reader, MetadataReaderFactory readerFactory) throws IOException {
         //遍历所有类型过滤器(这里只有个注解过滤器 )
         for (TypeFilter filter : ENTITY_TYPE_FILTERS) {
-
             //调用过滤器的匹配方法 通过元数据比较 是否是匹配类型 是的话返回true
             if (filter.match(reader, readerFactory)) {
                 return true;

@@ -1,6 +1,7 @@
 package xyz.sinsong.core.load;
 
 import lombok.extern.slf4j.Slf4j;
+import xyz.sinsong.core.ioc.IocUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,9 +19,6 @@ public class ReceiverHandlerFactory {
     //保存Receiver类 示例对象的map key是className
     private static Map<String,Object> classes = new HashMap<String,Object>();
 
-
-
-
     /**
      * 放进这个工厂 这个方法会将这些类实例化对象 保存在classes 这个map中
      * @param clazz
@@ -30,12 +28,12 @@ public class ReceiverHandlerFactory {
 //            log.info("初始化ReceiverHandler类:"+ clazz.getName());
 //            logger.info("初始化ServletHandler类:"+ clazz.getName());
             //通过类的运行时对象 获取ioc容器中的实例化对象
-            Object receiver = StartAddDataListener.getBean(clazz);
+            Object receiver = IocUtil.getBean(clazz);
 //            Object receiver = clazz.newInstance();
 
             //放入存储这个对象的map中 k:类名 v:类对象
             classes.put(clazz.getName(), receiver);
-            log.info("初始化ReceiverHandler类成功:"+ clazz.getName());
+            log.info("初始化接收器{}成功!",clazz.getName());
 
 
         } catch (Exception e) {

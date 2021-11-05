@@ -1,4 +1,4 @@
-package xyz.sinsong.core.anotation;
+package xyz.sinsong.anotation;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Indexed;

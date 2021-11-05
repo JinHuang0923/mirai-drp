@@ -1,7 +1,7 @@
 package xyz.sinsong.core.load;
 
 import lombok.extern.slf4j.Slf4j;
-import xyz.sinsong.core.anotation.Receive;
+import xyz.sinsong.anotation.Receive;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -106,9 +106,9 @@ public class ReceiverHandlerMappingFactory {
     }
 
     private static void addPrivateMethodMapping(String command, Method method) {
-        log.info(" 加载私聊处理指令方法, method:" + method.getName() + " for 指令:" + command);
+        log.info("加载私聊处理指令:[{}] 处理对象:{}",command,method);
         //通过key 获取一遍是否有重复加入的对象
-        Method handlerMethod = receiverHandlerMapping.get(command);
+        Method handlerMethod = privateHandlerMapping.get(command);
 
         //有重复的已经加过一遍了 抛出异常
         if(handlerMethod != null){
@@ -120,7 +120,7 @@ public class ReceiverHandlerMappingFactory {
     }
 
     public static void addMethodMapping(String command,Method method) {
-        log.info(" 加载群聊处理指令方法, method:" + method.getName() + " for 指令:" + command);
+        log.info("加载群聊处理指令:[{}] 处理对象:{}",command,method);
 //        logger.info(" Load servlet handler mapping, method:" + method.getName() + " for url:" + url);
 
         //通过key 获取一遍是否有重复加入的对象
